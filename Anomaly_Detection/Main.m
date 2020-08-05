@@ -31,7 +31,7 @@ fprintf('Visualizing example dataset for outlier detection.\n\n');
 
 %  The following command loads the dataset. You should now have the
 %  variables X, Xval, yval in your environment
-load('ex8data1.mat');
+load('exdata1.mat');
 
 %  Visualize the example dataset
 plot(X(:, 1), X(:, 2), 'bx');
@@ -100,7 +100,7 @@ pause;
 
 %  Loads the second dataset. You should now have the
 %  variables X, Xval, yval in your environment
-load('ex8data2.mat');
+load('exdata2.mat');
 
 %  Apply the same steps to the larger dataset
 [mu, sigma2] = estimateGaussian(X);
