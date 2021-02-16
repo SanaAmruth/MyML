@@ -1,4 +1,5 @@
-
+#!/usr/bin/env python
+# coding: utf-8
 
 # In[1]:
 
@@ -15,7 +16,7 @@ from sklearn.decomposition import PCA
 # In[2]:
 
 
-creditcard_df= pd.read_csv('Credit_card_data.csv')
+creditcard_df= pd.read_csv('/Users/sana/Desktop/Academics/Projects/Customer_Segmentation/Credit_card_data.csv')
 
 
 # In[3]:
@@ -43,7 +44,7 @@ creditcard_df.describe()
 print(creditcard_df.isnull().sum())
 
 
-# In[10]:
+# In[7]:
 
 
 creditcard_df.loc[(creditcard_df['MINIMUM_PAYMENTS'].isnull() == True), 'MINIMUM_PAYMENTS'] = creditcard_df['MINIMUM_PAYMENTS'].mean()          
@@ -53,73 +54,73 @@ creditcard_df.isnull().sum()
 # In[8]:
 
 
-creditcard_df.loc[(creditcard_df['CREDIT_LIMIT'].isnull() == True),'CREDIT_LIMIT'] = creditcard_df['CREDIT_LIMIT'].mean()
+creditcard_df.loc[(creditcard_df['CREDIT_LIMIT'].isnull() == True),'CREDIT_LIMIT']=creditcard_df['CREDIT_LIMIT'].mean() 
 
 
-# In[11]:
+# In[9]:
 
 
 creditcard_df.isnull().sum()
 
 
-# In[12]:
+# In[10]:
 
 
 creditcard_df.isnull().sum().sum()
 
 
-# In[13]:
+# In[11]:
 
 
 creditcard_df.drop('CUST_ID',axis=1,inplace=True)
 
 
-# In[14]:
+# In[12]:
 
 
 creditcard_df
 
 
-# In[15]:
+# In[13]:
 
 
 n = len(creditcard_df.columns)
 n
 
 
-# In[16]:
+# In[14]:
 
 
 creditcard_df.columns
 
 
-# In[19]:
+# In[15]:
 
 
 correlations=creditcard_df.corr()
 sns.heatmap(correlations,annot=True)
 
 
-# In[20]:
+# In[16]:
 
 
 scaler=StandardScaler()
 creditcard_df_scaled=scaler.fit_transform(creditcard_df)
 
 
-# In[21]:
+# In[17]:
 
 
 type(creditcard_df_scaled)
 
 
-# In[22]:
+# In[18]:
 
 
 creditcard_df_scaled
 
 
-# In[23]:
+# In[19]:
 
 
 cost=[]
@@ -131,7 +132,7 @@ for i in range_values:
 plt.plot(cost)
 
 
-# In[24]:
+# In[20]:
 
 
 kmeans = KMeans(7)
@@ -140,75 +141,75 @@ labels = kmeans.labels_
 labels
 
 
-# In[25]:
+# In[21]:
 
 
 kmeans.cluster_centers_.shape
 
 
-# In[26]:
+# In[22]:
 
 
 cluster_centers=pd.DataFrame(data=kmeans.cluster_centers_,columns=[creditcard_df.columns])
 cluster_centers
 
 
-# In[27]:
+# In[23]:
 
 
-scaler=StandardScaler()
-cluster_centers=scaler.inverse_transform(cluster_centers)
-cluster_centers=pd.DataFrame(data=cluster_centers,columns=[creditcard_df_scaled.columns])
-cluster_centers
+# scaler=StandardScaler()
+# cluster_centers=scaler.inverse_transform(cluster_centers)
+# cluster_centers=pd.DataFrame(data=cluster_centers,columns=[creditcard_df_scaled.columns])
+# cluster_centers
 
 
-# In[28]:
+# In[24]:
 
 
 labels.shape
 
 
-# In[29]:
+# In[25]:
 
 
 labels.max()
 
 
-# In[30]:
+# In[26]:
 
 
 labels.min()
 
 
-# In[31]:
+# In[27]:
 
 
 credit_df_cluster=pd.concat([creditcard_df,pd.DataFrame(({'cluster':labels}))],axis=1)
 credit_df_cluster
 
 
-# In[32]:
+# In[28]:
 
 
 pca=PCA(n_components=2)
 principal_comp=pca.fit_transform(creditcard_df_scaled)
 
 
-# In[33]:
+# In[29]:
 
 
 pca_df=pd.DataFrame(data=principal_comp,columns=['pca1','pca2'])
 pca_df
 
 
-# In[34]:
+# In[30]:
 
 
 pca_df=pd.concat([pca_df,pd.DataFrame({'Cluster':labels})],axis=1)
 pca_df
 
 
-# In[36]:
+# In[31]:
 
 
 plt.figure(figsize=(10,10))
